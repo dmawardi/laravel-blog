@@ -43,21 +43,35 @@ class Post
     {
         $files = File::files(resource_path("posts/"));
 
+        // Collection creation then iteration method
+        $posts = collect($files)
+            ->map(function($file) { 
+                $document = YamlFrontMatter::parseFile($file);
+                return new Post(
+                    $document->title,
+                    $document->excerpt,
+                    $document->date,
+                    // Uses function as requires getter to set
+                    $document->body(),
+                    $document->slug,
+                );
+            });
 
-        // Iterate through files array and parse each file as new post
-        $posts = array_map(function ($file) {
-            $document = YamlFrontMatter::parseFile($file);
+        // Array map iteration method
+        // // Iterate through files array and parse each file as new post
+        // $posts = array_map(function ($file) {
+        //     $document = YamlFrontMatter::parseFile($file);
 
-            return new Post(
-                $document->title,
-                $document->excerpt,
-                $document->date,
-                // Uses function as requires getter to set
-                $document->body(),
-                $document->slug,
-            );
+        //     return new Post(
+        //         $document->title,
+        //         $document->excerpt,
+        //         $document->date,
+        //         // Uses function as requires getter to set
+        //         $document->body(),
+        //         $document->slug,
+        //     );
 
-        }, $files);
+        // }, $files);
 
         // Old iteration method
         // $posts = [];
