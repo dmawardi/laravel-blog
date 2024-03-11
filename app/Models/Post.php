@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\File;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
+use function PHPUnit\Framework\isNull;
+
 class Post
 {
     // Properties
@@ -25,12 +27,22 @@ class Post
         $this->slug = $slug;
     }
     // Methods
-    public static function find($slug)
-    {
-
+    public static function find($slug) {
+        // Fetch all posts
         $posts = static::all();
+        // Find the post with the given slug
+        $foundPost = $posts->firstWhere('slug', $slug);
+        return $foundPost;
+    }
+    public static function findOrFail($slug)
+    {
+        $foundPost = static::find($slug);
+        // If no post is found, throw a 404 error
+        if (! $foundPost) {
+            throw new ModelNotFoundException();
+        }
 
-        return $posts->firstWhere('slug', $slug);
+        return $foundPost;
         // // Build path to resource folder then to the post
         // $path = resource_path("posts/{$slug}.html");
 

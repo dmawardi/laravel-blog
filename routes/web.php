@@ -24,12 +24,14 @@ Route::get('/', function () {
 });
 
 Route::get('posts/{slug}', function ($slug) {
-    // Fetch post using Post model
-    $post = Post::find($slug);
+    try {
+        // Fetch post using Post model
+        $post = Post::findOrFail($slug);
 
-    if($post === ModelNotFoundException::class) {
-        return redirect("/");
-    };
+    // Catch not found error and redirect if found
+    } catch (ModelNotFoundException $e) {
+        return redirect('/');
+    }
 
     // Return view with post data
     return view('post', ['post' => $post]);

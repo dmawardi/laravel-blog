@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/app.css">
 </head>
 <body>
-  @yield('content')
+  {{-- Keyword slot allows for it to be default --}}
+  {{ $slot }}
 </body>
 </html>

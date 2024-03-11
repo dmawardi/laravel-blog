@@ -74,3 +74,12 @@ php artisan serve
 # To open shell into server
 php artisan tinker
 ```
+
+## Blade Templating Engine
+
+Methods of components:
+
+1. You can either use the @extends('layout') to extend a layout with sections for inputting content.
+2. Create a new folder in the views folder called components. Everything in here will be automatically made available in your blade files. It allows for using curly braces instead of @ directives for inserting content
+
+The second method is the preferred method.
