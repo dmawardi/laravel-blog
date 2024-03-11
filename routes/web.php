@@ -1,6 +1,9 @@
 <?php
 
+use App\Models\Post;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Route;
+use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,34 +17,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('posts');
+    $posts = Post::all();
+    return view('posts', [
+        'posts' => $posts
+    ]);
 });
 
 Route::get('posts/{slug}', function ($slug) {
-    $path = __DIR__ . "/../resources/posts/{$slug}.html";
+    // Fetch post using Post model
+    $post = Post::find($slug);
 
-    if(! file_exists($path)) {
-        // dd is used to pass messages for debugging
-        // dd('File does not exist.');
+    if($post === ModelNotFoundException::class) {
+        return redirect("/");
+    };
 
-        // abort is used to return a status code and a message
-        // abort(404);
-
-        return redirect('/');
-    }
-
-    // Set a cache with a key (post.{%slug}) for 30 minutes, if cache value doesn't exist, run the function
-    // Old function (Now replaced with arrow function)
-    // function() use ($path) {
-    //     var_dump('file_get_contents');
-    //     return file_get_contents($path);
-    // }
-    $post = cache()->remember("post.{$slug}", now()->addMinutes(20), fn()=> file_get_contents($path));
-
-    // Non cache version
-    // $post = file_get_contents($path);
-    
+    // Return view with post data
     return view('post', ['post' => $post]);
+
 // slug validation (failure results in 404)
 // For just alphanumeric characters
 // ->whereAlpha('slug')
