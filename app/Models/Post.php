@@ -27,15 +27,19 @@ class Post
     // Methods
     public static function find($slug)
     {
-        // Build path to resource folder then to the post
-        $path = resource_path("posts/{$slug}.html");
 
-        // If the file does not exist, return to the home page
-        if (! file_exists($path)) {
-            throw new ModelNotFoundException();
-        }
+        $posts = static::all();
 
-        return cache()->remember("posts.{$slug}", now()->addMinutes(20), fn() => file_get_contents($path));
+        return $posts->firstWhere('slug', $slug);
+        // // Build path to resource folder then to the post
+        // $path = resource_path("posts/{$slug}.html");
+
+        // // If the file does not exist, return to the home page
+        // if (! file_exists($path)) {
+        //     throw new ModelNotFoundException();
+        // }
+
+        // return cache()->remember("posts.{$slug}", now()->addMinutes(20), fn() => file_get_contents($path));
    
     }
 
@@ -53,7 +57,8 @@ class Post
                     // Uses function as requires getter to set
                     $post->body(),
                     $post->slug,
-                ));
+                ))
+            ->sortByDesc('date');
 
         // Array map iteration method
         // // Iterate through files array and parse each file as new post
@@ -91,7 +96,12 @@ class Post
         // Array map loops through arrays. In this case, each file and returns the contents of each file
         // $fileContents = array_map(fn($file) => $file->getContents(), $files);
         // return $fileContents;
-        return $posts;
+
+        // Cache posts forever then return. Cache will need to be manually refreshed
+        return cache()->rememberForever('posts.all', function () use ($posts) {
+            return $posts;
+        });
+        // return $posts;
     }
 }
 ?>
