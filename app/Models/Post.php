@@ -46,14 +46,17 @@ class Post
         // Collection creation then iteration method
         $posts = collect($files)
             ->map(function($file) { 
-                $document = YamlFrontMatter::parseFile($file);
+                return YamlFrontMatter::parseFile($file);
+
+            })
+            ->map(function($post) {
                 return new Post(
-                    $document->title,
-                    $document->excerpt,
-                    $document->date,
+                    $post->title,
+                    $post->excerpt,
+                    $post->date,
                     // Uses function as requires getter to set
-                    $document->body(),
-                    $document->slug,
+                    $post->body(),
+                    $post->slug,
                 );
             });
 
