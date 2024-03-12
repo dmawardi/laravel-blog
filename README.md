@@ -73,7 +73,33 @@ php artisan serve
 
 # To open shell into server
 php artisan tinker
+
+# Make migrations
+php artisan migrate
+# Rollback migrations
+php artisan migrate:rollback
+# Refresh migrations
+php artisan migrate:refresh
 ```
+
+MySQL commands:
+
+    ```bash
+    # To start the mysql server
+    brew services start mysql
+    # To login to mysql
+    mysql -u root -p
+    # To show databases
+    show databases;
+    # To create a database
+    create database laravel;
+    # To use a database
+    use laravel;
+    # To show tables
+    show tables;
+    # To create a table
+    create table users (id int, name varchar(255));
+    ```
 
 ## Blade Templating Engine
 
