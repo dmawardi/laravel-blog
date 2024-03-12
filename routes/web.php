@@ -23,11 +23,10 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('posts/{slug}', function ($slug) {
+Route::get('posts/{id}', function ($id) {
     try {
         // Fetch post using Post model
-        $post = Post::findOrFail($slug);
-
+        $post = Post::findOrFail($id);
     // Catch not found error and redirect if found
     } catch (ModelNotFoundException $e) {
         return redirect('/');
@@ -41,3 +40,4 @@ Route::get('posts/{slug}', function ($slug) {
 // ->whereAlpha('slug')
 // The above can be replaced with built in
 })->where('slug', '[A-z_\-]+');
+

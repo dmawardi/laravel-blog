@@ -82,6 +82,19 @@ php artisan migrate:rollback
 php artisan migrate:refresh
 ```
 
+# Make commands
+
+    ```bash
+    # To make a controller
+    php artisan make:controller PagesController
+    # To make a model
+    php artisan make:model Post
+    # To make a migration
+    php artisan make:migration create_posts_table
+    # To make a seeder
+    php artisan make:seeder PostsTableSeeder
+    ```
+
 MySQL commands:
 
     ```bash
@@ -109,3 +122,16 @@ Methods of components:
 2. Create a new folder in the views folder called components. Everything in here will be automatically made available in your blade files. It allows for using curly braces instead of @ directives for inserting content
 
 The second method is the preferred method.
+
+## Helpful tips
+
+When creating a DB model, you should aim to buid migrations first, then models, then controllers. This is the best practice for building a Laravel application.
+
+The commands used for building migrations and models are:
+
+    ```bash
+    # To make a migration
+    php artisan make:migration create_posts_table
+    # To make an Eloquent model
+    php artisan make:model Post
+    ```
