@@ -23,10 +23,13 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('posts/{id}', function ($id) {
+// Using the Post model to fetch a post tells Laravel to look for a post with the given id
+// Using post:slug is no longer required as the Post model has a getRouteKeyName method that returns the field to use for fetching the post
+// Convention is to set the slug field as the search field below in the route as opposed to getRouteKeyName
+Route::get('posts/{post:slug}', function (Post $post) { // Laravel will automatically fetch the post with the given slug when using post:slug
     try {
         // Fetch post using Post model
-        $post = Post::findOrFail($id);
+        // $post = Post::findOrFail($post);
     // Catch not found error and redirect if found
     } catch (ModelNotFoundException $e) {
         return redirect('/');
