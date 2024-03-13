@@ -19,6 +19,11 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 -   [Robust background job processing](https://laravel.com/docs/queues).
 -   [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
+## Additional packages
+
+-   [Laravel Clockwork](https://github.com/itsgoingd/clockwork): Used for logging and debugging
+    You then would need to download the browser extension for Chrome or Firefox to use it.
+
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
 ## Learning Laravel
@@ -73,13 +78,17 @@ php artisan serve
 
 # To open shell into server
 php artisan tinker
-
 # Make migrations
 php artisan migrate
 # Rollback migrations
 php artisan migrate:rollback
 # Refresh migrations
 php artisan migrate:refresh
+# To seed database
+php artisan db:seed
+
+# To refresh and seed
+php artisan migrate:fresh --seed
 ```
 
 # Make commands
@@ -122,6 +131,22 @@ Methods of components:
 2. Create a new folder in the views folder called components. Everything in here will be automatically made available in your blade files. It allows for using curly braces instead of @ directives for inserting content
 
 The second method is the preferred method.
+
+## Procedure for using components
+
+1. Create a new folder in the views folder called components (if it doesn't exist)
+2. Create a new blade file in the components folder
+3. Use the blade file in the views folder
+
+## Procedure for building models
+
+1. Create a new migration file and models using the command: php artisan make:model ModelName -m
+2. Add the columns to the migration file
+3. Run the migration using the command: php artisan migrate
+4. Add the fillable/protected columns to the model
+5. Add the relationships to the model by adding methods to the model that return the relationshp: hasMany, belongsTo, belongsToMany, etc.
+6. Once the relationships have been added, to avoid n+1 queries, use the with() method to eager load the relationships
+7. Add seeds to the database using the command: php artisan db:seed (This will use the seeder file in the database/seeders folder)
 
 ## Helpful tips
 

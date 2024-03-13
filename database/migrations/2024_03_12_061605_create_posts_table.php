@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamp('published_at')->nullable();
             // Foreign key
             $table->foreignId('category_id');
+            $table->foreignId('user_id');
         });
     }
 

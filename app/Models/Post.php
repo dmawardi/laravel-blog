@@ -23,6 +23,12 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function user()
+    {
+        // This is for the relationship between the post and user
+        return $this->belongsTo(User::class);
+    }
+
     // This is for the route to fetch the post by slug
     public function getRouteKeyName()
     {

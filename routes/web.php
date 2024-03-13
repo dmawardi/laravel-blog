@@ -2,6 +2,7 @@
 
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Route;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
@@ -18,7 +19,16 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 */
 
 Route::get('/', function () {
-    $posts = Post::all();
+    // Helpful function provided by Laravel to log all queries (this can be replaced through using Clockwork pkg & dev tools for Firefox)
+    // \Illuminate\Support\Facades\DB::listen(function ($query) {
+    //     // Log the sql for the incoming query and include bindings (Where conditions)
+    //     logger($query->sql, $query->bindings);
+    // });
+
+    // with method is used to eager load the category relationship. This is used to prevent n+1 queries
+    // $posts = Post::all();
+    // Get is used to execute the query
+    $posts = Post::with('category')->get();
     return view('posts', [
         'posts' => $posts
     ]);
@@ -49,5 +59,12 @@ Route::get('posts/{post:slug}', function (Post $post) { // Laravel will automati
 Route::get('categories/{category:slug}', function (Category $category) {
     return view('posts', [
         'posts' => $category->posts
+    ]);
+});
+
+// Route to fetch posts by author
+Route::get('authors/{author:name}', function (User $author) {
+    return view('posts', [
+        'posts' => $author->posts
     ]);
 });
