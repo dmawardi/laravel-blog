@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Route;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
@@ -44,3 +45,9 @@ Route::get('posts/{post:slug}', function (Post $post) { // Laravel will automati
 // The above can be replaced with built in
 })->where('slug', '[A-z_\-]+');
 
+// Route to fetch posts by category
+Route::get('categories/{category:slug}', function (Category $category) {
+    return view('posts', [
+        'posts' => $category->posts
+    ]);
+});

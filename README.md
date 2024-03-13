@@ -134,4 +134,6 @@ The commands used for building migrations and models are:
     php artisan make:migration create_posts_table
     # To make an Eloquent model
     php artisan make:model Post
+    # Combined above commands (will auto create migration file)
+    php artisan make:model Post -m
     ```
