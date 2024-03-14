@@ -84,14 +84,14 @@ php artisan migrate
 php artisan migrate:rollback
 # Refresh migrations
 php artisan migrate:refresh
-# To seed database
+# To seed database using seeder
 php artisan db:seed
 
 # To refresh and seed
 php artisan migrate:fresh --seed
 ```
 
-# Make commands
+## Make commands
 
     ```bash
     # To make a controller
@@ -102,7 +102,23 @@ php artisan migrate:fresh --seed
     php artisan make:migration create_posts_table
     # To make a seeder
     php artisan make:seeder PostsTableSeeder
+    # To make a factory
+    php artisan make:factory PostFactory
+    # To make a factory, seeder, migration and model together (Usually a seeder isn't required ie. -mf)
+    php artisan make:model Post -msf
     ```
+
+### Factory usage
+
+        ```php
+        // To use the factory manually in the tinker shell or in a controller
+        Post::factory()->count(50)->create();
+        ```
+
+        ```bash
+        # To use the seeder
+        php artisan db:seed
+        ```
 
 MySQL commands:
 
@@ -145,8 +161,11 @@ The second method is the preferred method.
 3. Run the migration using the command: php artisan migrate
 4. Add the fillable/protected columns to the model
 5. Add the relationships to the model by adding methods to the model that return the relationshp: hasMany, belongsTo, belongsToMany, etc.
-6. Once the relationships have been added, to avoid n+1 queries, use the with() method to eager load the relationships
-7. Add seeds to the database using the command: php artisan db:seed (This will use the seeder file in the database/seeders folder)
+6. Once the relationships have been added, to avoid n+1 queries, use the with() method to eager load any relationships
+   eg. Post::with('user', 'category')->get();
+7. Define the properties for the factory in the model factory file. You can generate a factory file using the command: php artisan make:factory ModelNameFactory. Then define the properties for the factory in the file.
+8. Add the factory to the database seeder file
+9. Add seeds to the database using the command: php artisan db:seed (This will use the seeder file in the database/seeders folder)
 
 ## Helpful tips
 

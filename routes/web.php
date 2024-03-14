@@ -27,8 +27,8 @@ Route::get('/', function () {
 
     // with method is used to eager load the category relationship. This is used to prevent n+1 queries
     // $posts = Post::all();
-    // Get is used to execute the query
-    $posts = Post::with('category')->get();
+    // Get is used to execute the query after with adds foreign key and latest sorts by published_at
+    $posts = Post::latest('published_at')->with('category', 'author')->get();
     return view('posts', [
         'posts' => $posts
     ]);
@@ -58,12 +58,16 @@ Route::get('posts/{post:slug}', function (Post $post) { // Laravel will automati
 // Route to fetch posts by category
 Route::get('categories/{category:slug}', function (Category $category) {
     return view('posts', [
+        // load allows you to remove the n+1 problem by eager loading the category and author relationships
+        // This is different when loading from the model with the foreign key, which uses with
         'posts' => $category->posts
     ]);
 });
 
 // Route to fetch posts by author
-Route::get('authors/{author:name}', function (User $author) {
+Route::get('authors/{author:username}', function (User $author) {
+    // ->load(['category', 'author']) is used to eager load the category and author relationships
+    // Alternatively, you can add a protected field in the model to automatically load the relationships
     return view('posts', [
         'posts' => $author->posts
     ]);

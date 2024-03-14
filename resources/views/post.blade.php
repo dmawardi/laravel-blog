@@ -4,7 +4,7 @@
         {!! $post->body !!}
     </div>
     <p>
-        By <a href="/authors/{{ $post->user->name }}">{{ $post->user->name }}</a> in <a
+        By <a href="/authors/{{ $post->author->username }}">{{ $post->author->name }}</a> in <a
             href="/categories/{{ $post->category->slug }}">{{ $post->category->name }}</a>
     </p>
     <a href="/">Go Back</a>

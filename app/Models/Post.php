@@ -16,6 +16,8 @@ class Post extends Model
     // E.g. $post = Post::create('title' => 'New Post', 'excerpt' => 'New Excerpt', 'body' => 'New Body');
     // protected $fillable = ['title', 'excerpt', 'body'];
 
+    protected $with = ['category', 'author'];
+
     public function category()
     {
         // This is for the relationship between the post and category
@@ -23,10 +25,11 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function user()
+    public function author()
     {
-        // This is for the relationship between the post and user
-        return $this->belongsTo(User::class);
+        // This is for the relationship between the post and user. 
+        // We want it to be labelled as author so we override the default user_id
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     // This is for the route to fetch the post by slug

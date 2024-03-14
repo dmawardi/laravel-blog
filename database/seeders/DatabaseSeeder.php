@@ -17,60 +17,66 @@ class DatabaseSeeder extends Seeder
     {
 
         // Clears tables
-        User::truncate();
-        Category::truncate();
-        Post::truncate();
+        // User::truncate();
+        // Category::truncate();
+        // Post::truncate();
 
-        // Creates 10 users as part of seed
-        // User::factory(10)->create();
-        $user = User::factory()->create();
+        // Creates a user with the name John Doe (create param is an array of attributes to override defaults)
+        $user = User::factory()->create([
+            'name' => 'John Doe']);
 
-        // Create categories
-        $hobby = Category::create([
-            'name' => 'Hobby',
-            'slug' => 'hobby',
+        // Post will automatically create a user and category
+        Post::factory(10)->create([
+            'user_id' => $user->id
         ]);
 
-        $personal = Category::create([
-            'name' => 'Personal',
-            'slug' => 'personal',
+        $category = Category::factory()->create();
+        Post::factory(10)->create([
+            'category_id' => $category->id
         ]);
+        // $user = User::factory()->create();
 
-        $work = Category::create([
-            'name' => 'Work',
-            'slug' => 'work',
-        ]);
+        // // Create categories
+        // $hobby = Category::create([
+        //     'name' => 'Hobby',
+        //     'slug' => 'hobby',
+        // ]);
 
-        Post::Create([
-            'title' => 'My First Post',
-            'excerpt' => '<p>This is the first post</p>',
-            'body' => '<p>This is the body of the first post</p>',
-            'slug' => 'my-first-post',
-            'category_id' => $work->id,
-            'user_id' => $user->id,
-        ]);
+        // $personal = Category::create([
+        //     'name' => 'Personal',
+        //     'slug' => 'personal',
+        // ]);
 
-        Post::Create([
-            'title' => 'My Second Post',
-            'excerpt' => '<p>This is the second post</p>',
-            'body' => '<p>This is the body of the second post</p>',
-            'slug' => 'my-second-post',
-            'category_id' => $hobby->id,
-            'user_id' => $user->id,
-        ]);
+        // $work = Category::create([
+        //     'name' => 'Work',
+        //     'slug' => 'work',
+        // ]);
 
-        Post::Create([
-            'title' => 'My Third Post',
-            'excerpt' => '<p>This is the third post</p>',
-            'body' => '<p>This is the body of the third post</p>',
-            'slug' => 'my-third-post',
-            'category_id' => $personal->id,
-            'user_id' => $user->id,
-        ]);
+        // Post::Create([
+        //     'title' => 'My First Post',
+        //     'excerpt' => '<p>This is the first post</p>',
+        //     'body' => '<p>This is the body of the first post</p>',
+        //     'slug' => 'my-first-post',
+        //     'category_id' => $work->id,
+        //     'user_id' => $user->id,
+        // ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
+        // Post::Create([
+        //     'title' => 'My Second Post',
+        //     'excerpt' => '<p>This is the second post</p>',
+        //     'body' => '<p>This is the body of the second post</p>',
+        //     'slug' => 'my-second-post',
+        //     'category_id' => $hobby->id,
+        //     'user_id' => $user->id,
+        // ]);
+
+        // Post::Create([
+        //     'title' => 'My Third Post',
+        //     'excerpt' => '<p>This is the third post</p>',
+        //     'body' => '<p>This is the body of the third post</p>',
+        //     'slug' => 'my-third-post',
+        //     'category_id' => $personal->id,
+        //     'user_id' => $user->id,
         // ]);
     }
 }
