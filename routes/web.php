@@ -30,7 +30,8 @@ Route::get('/', function () {
     // Get is used to execute the query after with adds foreign key and latest sorts by published_at
     $posts = Post::latest('published_at')->with('category', 'author')->get();
     return view('posts', [
-        'posts' => $posts
+        'posts' => $posts,
+        'categories' => Category::all(),
     ]);
 });
 
@@ -60,7 +61,8 @@ Route::get('categories/{category:slug}', function (Category $category) {
     return view('posts', [
         // load allows you to remove the n+1 problem by eager loading the category and author relationships
         // This is different when loading from the model with the foreign key, which uses with
-        'posts' => $category->posts
+        'posts' => $category->posts,
+        'categories' => Category::all(),
     ]);
 });
 
@@ -69,6 +71,7 @@ Route::get('authors/{author:username}', function (User $author) {
     // ->load(['category', 'author']) is used to eager load the category and author relationships
     // Alternatively, you can add a protected field in the model to automatically load the relationships
     return view('posts', [
-        'posts' => $author->posts
+        'posts' => $author->posts,
+        'categories' => Category::all(),
     ]);
 });
