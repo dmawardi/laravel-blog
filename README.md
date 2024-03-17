@@ -73,6 +73,8 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ## Commands
 
 ```bash
+# To create a new laravel project
+laravel new project-name
 # To run the server
 php artisan serve
 
