@@ -32,7 +32,6 @@ Route::get('/', function () {
     return view('posts', [
         'posts' => $posts,
         'categories' => Category::all(),
-        'searchTerm' => request('search'),
     ]);
 });
 
@@ -64,7 +63,6 @@ Route::get('categories/{category:slug}', function (Category $category) {
         // This is different when loading from the model with the foreign key, which uses with
         'posts' => $category->posts,
         'categories' => Category::all(),
-        'searchTerm' => request('search'),
     ]);
 });
 
@@ -75,7 +73,6 @@ Route::get('authors/{author:username}', function (User $author) {
     return view('posts', [
         'posts' => $author->posts,
         'categories' => Category::all(),
-        'searchTerm' => request('search'),
     ]);
 });
 
