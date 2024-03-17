@@ -19,19 +19,20 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 */
 
 Route::get('/', function () {
-    // Helpful function provided by Laravel to log all queries (this can be replaced through using Clockwork pkg & dev tools for Firefox)
-    // \Illuminate\Support\Facades\DB::listen(function ($query) {
-    //     // Log the sql for the incoming query and include bindings (Where conditions)
-    //     logger($query->sql, $query->bindings);
-    // });
+    // Build a query to fetch all posts
+    $posts = Post::latest('published_at')->with('category', 'author');
+    // If a search term is provided, add it to the query
+    addSearchTerm($posts);
+    // Fetch all posts
+    $posts = $posts->get();
 
     // with method is used to eager load the category relationship. This is used to prevent n+1 queries
     // $posts = Post::all();
     // Get is used to execute the query after with adds foreign key and latest sorts by published_at
-    $posts = Post::latest('published_at')->with('category', 'author')->get();
     return view('posts', [
         'posts' => $posts,
         'categories' => Category::all(),
+        'searchTerm' => request('search'),
     ]);
 });
 
@@ -63,6 +64,7 @@ Route::get('categories/{category:slug}', function (Category $category) {
         // This is different when loading from the model with the foreign key, which uses with
         'posts' => $category->posts,
         'categories' => Category::all(),
+        'searchTerm' => request('search'),
     ]);
 });
 
@@ -73,5 +75,18 @@ Route::get('authors/{author:username}', function (User $author) {
     return view('posts', [
         'posts' => $author->posts,
         'categories' => Category::all(),
+        'searchTerm' => request('search'),
     ]);
 });
+
+// function to add search term to posts query
+function addSearchTerm($postsQuery) {
+    if(request('search'))  {
+        $searchTerm = request('search');
+        // Search database for posts with the given search term
+        $postsQuery->where('title', 'like', '%' . $searchTerm . '%')
+            ->orWhere('body', 'like', '%' . $searchTerm . '%');
+    }
+    // Fetch all posts
+    return $postsQuery;
+}
