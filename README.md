@@ -80,7 +80,7 @@ php artisan serve
 
 # To open shell into server
 php artisan tinker
-# Make migrations
+# Make migrations (that haven't been completed)
 php artisan migrate
 # Rollback migrations
 php artisan migrate:rollback
@@ -98,6 +98,8 @@ php artisan migrate:fresh --seed
     ```bash
     # To make a controller
     php artisan make:controller PagesController
+    # To make a component (blade file) and also a controller
+    php artisan make:controller CategoryDropdown
     # To make a model
     php artisan make:model Post
     # To make a migration

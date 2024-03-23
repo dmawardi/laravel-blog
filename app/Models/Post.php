@@ -18,6 +18,23 @@ class Post extends Model
 
     protected $with = ['category', 'author'];
 
+    public function scopeFilter($query, array $filters) { // Allows you to replace default filter by using scope prefix
+        // If a search term is provided, add it to the query
+        $query->when($filters['search'] ?? false, function($query, $search) {
+            // Search database for posts with the given search term
+            $query->where('title', 'like', '%' . $search . '%')
+                ->orWhere('body', 'like', '%' . $search . '%');
+        });
+
+        $query->when($filters['category'] ?? false, function($query, $category) {
+            // Search database for posts with a category
+            $query->whereHas('category', function($query) use ($category) {
+                // Where the slug matches the category
+                $query->where('slug', $category);
+            });
+        });
+    }
+
     public function category()
     {
         // This is for the relationship between the post and category
