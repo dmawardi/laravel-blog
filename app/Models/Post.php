@@ -33,6 +33,14 @@ class Post extends Model
                 $query->where('slug', $category);
             });
         });
+
+        $query->when($filters['author'] ?? false, function($query, $author) {
+            // Search database for posts with a category
+            $query->whereHas('author', function($query) use ($author) {
+                // Where the slug matches the category
+                $query->where('username', $author);
+            });
+        });
     }
 
     public function category()
