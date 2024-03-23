@@ -18,8 +18,16 @@
         document.getElementById('category').addEventListener('change', function() {
             var selectedValue = this.value;
 
+            var urlParams = "?" + 'category=' + selectedValue;
+
+            // If a search url param is detected add to the new URL
+            var searchParam = window.location.search;
+            if (searchParam) {
+                urlParams += '&' + searchParam.substring(1);
+            }
+
             // Redirecting to the new URL
-            window.location.href = "?" + 'category=' + selectedValue;
+            window.location.href = urlParams;
         });
     </script>
 
