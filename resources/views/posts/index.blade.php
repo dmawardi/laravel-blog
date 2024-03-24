@@ -6,6 +6,8 @@
         {{-- If there are posts --}}
         @if ($posts->count())
             <x-posts-grid :posts="$posts" />
+            {{-- When using paginate, links() gives access to pagination --}}
+            {{ $posts->links() }}
         @else
             <p class="text-center">No posts yet. Please check back later.</p>
         @endif

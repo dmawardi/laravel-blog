@@ -23,7 +23,7 @@
             // If a search url param is detected add to the new URL
             var searchParam = window.location.search;
             if (searchParam) {
-                urlParams += '&' + searchParam.substring(1);
+                urlParams += '&' + searchParam.split('&')[0];
             }
 
             // Redirecting to the new URL

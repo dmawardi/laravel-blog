@@ -12,7 +12,8 @@ class PostController extends Controller
     public function index() {
      // Build a query to fetch all posts
     //  filter is a scope method that adds the search term to the query
-     $posts = Post::latest('published_at')->with('category', 'author')->filter(request(['search', 'category', 'author']))->get();
+     $posts = Post::latest('published_at')->with('category', 'author')->filter(
+        request(['search', 'category', 'author']))->paginate(6);
  
      // with method is used to eager load the category relationship. This is used to prevent n+1 queries
      // $posts = Post::all();
