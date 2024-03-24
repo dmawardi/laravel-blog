@@ -13,7 +13,10 @@ class PostController extends Controller
      // Build a query to fetch all posts
     //  filter is a scope method that adds the search term to the query
      $posts = Post::latest('published_at')->with('category', 'author')->filter(
-        request(['search', 'category', 'author']))->paginate(6);
+        // Grab query params from the request
+        request(['search', 'category', 'author'])
+        // Paginate and add current query string to the pagination links
+        )->paginate(6)->withQueryString();
  
      // with method is used to eager load the category relationship. This is used to prevent n+1 queries
      // $posts = Post::all();
