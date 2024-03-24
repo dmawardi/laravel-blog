@@ -93,6 +93,29 @@ php artisan db:seed
 php artisan migrate:fresh --seed
 ```
 
+## Editing vendor files
+
+To edit vendor files, you can publish the vendor files using the command:
+
+```bash
+# Publich vendor files (then allows you to edit them)
+php artisan vendor:publish
+```
+
+This will allow you to edit the vendor files in the resources/views/vendor folder. In order to load different views, you can edit the App Service Provider file in the app/Providers folder.
+
+This allows you to change behavior during bootstrapping of the application. For example, you can change the view that is used for the paginator.
+
+    ```php
+    // In the AppServiceProvider file
+    public function boot()
+    {
+        Paginator::defaultView('vendor.pagination.bootstrap-4');
+        <!-- Or -->
+        Paginator::useBootstrap();  // This will use the default bootstrap paginator
+    }
+    ```
+
 ## Make commands
 
     ```bash
