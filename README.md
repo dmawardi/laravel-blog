@@ -183,7 +183,14 @@ The second method is the preferred method.
 
 ## Procedure for building models
 
-1. Create a new migration file and models using the command: php artisan make:model ModelName -m
+1. Create a new migration file and models using the command: php artisan make:model ModelName. This will create a new model file in the app/Models folder. It's convention that you will also add the tags below for additional files.
+   -m will create a migration file
+   -c will create a controller file
+   -a will create a factory file
+   -s will create a seeder file
+   -f will create a factory file
+   -all will create a migration, model, controller, factory and seeder file
+
 2. Add the columns to the migration file
 3. Run the migration using the command: php artisan migrate
 4. Add the fillable/protected columns to the model
