@@ -19,6 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
     ];
@@ -38,6 +39,12 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    // Mutator to hash the password (Must follow naming convenion set{AttributeName}Attribute)
+    // public function setPasswordAttribute($password)
+    // {
+    //     $this->attributes['password'] = bcrypt($password);
+    // }
+
     /**
      * The attributes that should be cast.
      *
@@ -45,6 +52,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        // New method of using mutator
         'password' => 'hashed',
     ];
 }

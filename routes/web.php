@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Route;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RegistrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,20 +27,5 @@ Route::get('/', [PostController::class, 'index'])->name('home');
 // Convention is to set the slug field as the search field below in the route as opposed to getRouteKeyName
 Route::get('posts/{post:slug}', [PostController::class, 'show'])->where('slug', '[A-z_\-]+');
 
-// Route to fetch posts by category
-// Route::get('categories/{category:slug}', function (Category $category) {
-//     return view('posts', [
-//         // load allows you to remove the n+1 problem by eager loading the category and author relationships
-//         // This is different when loading from the model with the foreign key, which uses with
-//         'posts' => $category->posts,
-//     ]);
-// });
-
-// Route to fetch posts by author
-// Route::get('authors/{author:username}', function (User $author) {
-//     // ->load(['category', 'author']) is used to eager load the category and author relationships
-//     // Alternatively, you can add a protected field in the model to automatically load the relationships
-//     return view('posts.index', [
-//         'posts' => $author->posts,
-//     ]);
-// });
+Route::get('register', [RegistrationController::class, 'create']);
+Route::post('register', [RegistrationController::class, 'store']);
