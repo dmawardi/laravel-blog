@@ -78,6 +78,11 @@ laravel new project-name
 # To run the server
 php artisan serve
 
+# To install composer dependencies
+composer install
+# To update composer dependencies
+composer update
+
 # To open shell into server
 php artisan tinker
 # Make migrations (that haven't been completed)
