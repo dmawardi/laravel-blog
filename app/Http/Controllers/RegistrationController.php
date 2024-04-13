@@ -19,7 +19,7 @@ class RegistrationController extends Controller
         // Validate the user
         $formAttributes = request()->validate([
             'name' => ['required', 'max:255'],
-            'username' => ['required', 'max:255'],
+            'username' => ['required', 'max:255', 'unique:users,username'],
             'email' => ['required', 'email', 'max:255'],
             'password' => ['required', 'min:7', 'max:255']
         ]);
