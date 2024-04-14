@@ -32,6 +32,9 @@ class RegistrationController extends Controller
         // Sign them in
         auth()->login($user);
 
+        // Places a message in the session to be used for next page load
+        session()->flash('success', 'Your account has been created.');
+
         // Redirect to the home page
         return redirect(to: '/');
      }
