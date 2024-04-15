@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\SessionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +28,7 @@ Route::get('/', [PostController::class, 'index'])->name('home');
 // Convention is to set the slug field as the search field below in the route as opposed to getRouteKeyName
 Route::get('posts/{post:slug}', [PostController::class, 'show'])->where('slug', '[A-z_\-]+');
 
-Route::get('register', [RegistrationController::class, 'create']);
-Route::post('register', [RegistrationController::class, 'store']);
+Route::get('register', [RegistrationController::class, 'create'])->middleware('guest');
+Route::post('register', [RegistrationController::class, 'store'])->middleware('guest');
+
+Route::post('logout', [SessionsController::class, 'destroy']);
