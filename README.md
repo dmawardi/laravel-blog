@@ -199,7 +199,7 @@ The second method is the preferred method.
 2. Add the columns to the migration file
 3. Run the migration using the command: php artisan migrate
 4. Add the fillable/protected columns to the model
-5. Add the relationships to the model by adding methods to the model that return the relationshp: hasMany, belongsTo, belongsToMany, etc.
+5. Add the relationships to the model by adding methods to the model that return the relationship: hasMany, belongsTo, belongsToMany, etc.
 6. Once the relationships have been added, to avoid n+1 queries, use the with() method to eager load any relationships
    eg. Post::with('user', 'category')->get();
 7. Define the properties for the factory in the model factory file. You can generate a factory file using the command: php artisan make:factory ModelNameFactory. Then define the properties for the factory in the file.

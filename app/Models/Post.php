@@ -44,6 +44,13 @@ class Post extends Model
         });
     }
 
+    public function comments()
+    {
+        // This is for the relationship between the post and comments
+        // Choices are: belongsTo, hasOne, hasMany, belongsToMany
+        return $this->hasMany(Comment::class);
+    }
+
     public function category()
     {
         // This is for the relationship between the post and category
