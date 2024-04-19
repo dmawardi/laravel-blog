@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\User;
@@ -27,11 +28,13 @@ Route::get('/', [PostController::class, 'index'])->name('home');
 // Using post:slug is no longer required as the Post model has a getRouteKeyName method that returns the field to use for fetching the post
 // Convention is to set the slug field as the search field below in the route as opposed to getRouteKeyName
 Route::get('posts/{post:slug}', [PostController::class, 'show'])->where('slug', '[A-z_\-]+');
+Route::post('posts/{post:slug}/comments', [CommentController::class, 'store']);
 
 Route::get('register', [RegistrationController::class, 'create'])->middleware('guest');
 Route::post('register', [RegistrationController::class, 'store'])->middleware('guest');
 
 Route::get('login', [SessionsController::class, 'create'])->middleware('guest');
 Route::post('login', [SessionsController::class, 'store'])->middleware('guest');
+
 Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth');
 
