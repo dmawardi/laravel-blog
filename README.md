@@ -136,6 +136,8 @@ This allows you to change behavior during bootstrapping of the application. For 
     php artisan make:seeder PostsTableSeeder
     # To make a factory
     php artisan make:factory PostFactory
+    # To make a policy
+    php artisan make:policy PostPolicy
     # To make a factory, seeder, migration and model together (Usually a seeder isn't required ie. -mf)
     php artisan make:model Post -msf
     ```
