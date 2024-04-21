@@ -195,6 +195,43 @@ The second method is the preferred method.
 3. Register the middleware in the kernel file in the app/Http folder
 4. Add the middleware to the route in the routes file
 
+## Serving Public files
+
+1.  For file uploads, you need to edit the filesystems.php file in the config folder to use the public disk
+2.  You can then use the Storage facade to store files in the public folder
+
+    ```php
+    // In the filesystems.php file
+    'disks' => [
+        'public' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public'),
+            'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+    ]
+    ```
+
+    ```php
+    // In the controller
+    $path = $request->file('image')->store('images', 'public');
+    ```
+
+    ```php
+    // In the view
+    <img src="{{ asset('storage/' . $post->image) }}" alt="">
+    ```
+
+    ```bash
+    # To link the storage folder to the public folder
+    php artisan storage:link
+    ```
+
+    ```php
+    // In the view
+    <img src="{{ Storage::url($post->image) }}" alt="">
+    ```
+
 ## Procedure for building models
 
 1. Create a new migration file and models using the command: php artisan make:model ModelName. This will create a new model file in the app/Models folder. It's convention that you will also add the tags below for additional files.

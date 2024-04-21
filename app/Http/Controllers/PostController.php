@@ -41,18 +41,20 @@ class PostController extends Controller
         // Validate the request
         $attributes = request()->validate([
             'title' => 'required',
-            // 'thumbnail' => 'required|image',
+            'thumbnail' => ['required','image'],
             'slug' => ['required', Rule::unique('posts', 'slug')],
             'excerpt' => 'required',
             'body' => 'required',
             'category_id' => ['required', Rule::exists('categories', 'id')],
-        ]);
-        dd('validation passed',$attributes);
-        // Store the image in the public directory
-        // $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
-
+        ]);        
         // Add the author id to the attributes
         $attributes['author_id'] = auth()->id();
+
+        // Store the image in the public directory: thumbnails
+        $baseFilePath = request()->file('thumbnail')->store('thumbnails');
+        // Update the thumbnail path in the attributes
+        $attributes['thumbnail'] = 'storage/'.$baseFilePath;
+        dd($attributes);
         // Create the post
         Post::create($attributes);
         // Redirect to the home page
