@@ -32,10 +32,6 @@ class PostController extends Controller
     }
 
     public function create() {
-        if(auth()->guest()) {
-            // abort(403);
-            abort(Response::HTTP_FORBIDDEN, 'You must be logged in to create a post');
-        }
         return view('posts.create', [
             'categories' => Category::all(),
         ]);
