@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -35,5 +36,26 @@ class PostController extends Controller
         return view('posts.create', [
             'categories' => Category::all(),
         ]);
+    }
+    public function store() {
+        // Validate the request
+        $attributes = request()->validate([
+            'title' => 'required',
+            // 'thumbnail' => 'required|image',
+            'slug' => ['required', Rule::unique('posts', 'slug')],
+            'excerpt' => 'required',
+            'body' => 'required',
+            'category_id' => ['required', Rule::exists('categories', 'id')],
+        ]);
+        dd('validation passed',$attributes);
+        // Store the image in the public directory
+        // $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
+
+        // Add the author id to the attributes
+        $attributes['author_id'] = auth()->id();
+        // Create the post
+        Post::create($attributes);
+        // Redirect to the home page
+        return redirect('/');
     }
 }
