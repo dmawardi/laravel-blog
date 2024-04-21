@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
 
         // Post will automatically create a user and category
         Post::factory(10)->create([
-            'user_id' => $user->id
+            'author_id' => $user->id
         ]);
 
         $category = Category::factory()->create();

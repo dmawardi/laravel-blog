@@ -62,7 +62,7 @@ class Post extends Model
     {
         // This is for the relationship between the post and user. 
         // We want it to be labelled as author so we override the default user_id
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'author_id');
     }
 
     // This is for the route to fetch the post by slug

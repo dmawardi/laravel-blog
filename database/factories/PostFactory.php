@@ -26,7 +26,7 @@ class PostFactory extends Factory
             'slug' => $this->faker->slug(),
             'excerpt' => $this->faker->sentence(),
             // Relationships
-            'user_id' => User::factory(),
+            'author_id' => User::factory(),
             'category_id' => Category::factory()
         ];
     }
