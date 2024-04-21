@@ -188,6 +188,13 @@ The second method is the preferred method.
 2. Create a new blade file in the components folder
 3. Use the blade file in the views folder
 
+## Procedure for building middleware
+
+1. Create a new middleware file using the command: php artisan make:middleware MiddlewareName
+2. Add the logic to the handle method in the middleware file
+3. Register the middleware in the kernel file in the app/Http folder
+4. Add the middleware to the route in the routes file
+
 ## Procedure for building models
 
 1. Create a new migration file and models using the command: php artisan make:model ModelName. This will create a new model file in the app/Models folder. It's convention that you will also add the tags below for additional files.
