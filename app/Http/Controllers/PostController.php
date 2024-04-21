@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
+use Illuminate\Http\Response;
 
 class PostController extends Controller
 {
@@ -28,5 +29,15 @@ class PostController extends Controller
 
     public function show(Post $post) {
         return view('posts.show', ['post' => $post]);
+    }
+
+    public function create() {
+        if(auth()->guest()) {
+            // abort(403);
+            abort(Response::HTTP_FORBIDDEN, 'You must be logged in to create a post');
+        }
+        return view('posts.create', [
+            'categories' => Category::all(),
+        ]);
     }
 }
