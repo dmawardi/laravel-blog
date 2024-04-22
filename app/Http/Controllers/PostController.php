@@ -53,7 +53,7 @@ class PostController extends Controller
         // Store the image in the public directory: thumbnails
         $baseFilePath = request()->file('thumbnail')->store('thumbnails');
         // Update the thumbnail path in the attributes
-        $attributes['thumbnail'] = 'storage/'.$baseFilePath;
+        $attributes['thumbnail'] = $baseFilePath;
         // Create the post
         Post::create($attributes);
         // Redirect to the home page
